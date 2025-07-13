@@ -83,44 +83,56 @@ const ramos = [
   { nombre: 'Memoria de Título', id: 'memoria', creditos: 20, requisitos: [], abre: [] },
 ];
 
-// Estado actual de cada ramo
+// Estado actual de cada ramo: "bloqueado", "desbloqueado", o "aprobado"
 const estadoRamos = {};
 
 function crearMalla() {
   const contenedor = document.getElementById('malla');
-  ramos.forEach(ramo => {
-    estadoRamos[ramo.id] = ramo.requisitos.length === 0 && !ramo.creditosNecesarios;
+  contenedor.innerHTML = '';
 
+  // Inicializar estados
+  ramos.forEach(ramo => {
+    const tieneCreditosNecesarios = ramo.creditosNecesarios ? true : false;
+    estadoRamos[ramo.id] = 'bloqueado';
+
+    if (ramo.requisitos.length === 0 && !tieneCreditosNecesarios) {
+      estadoRamos[ramo.id] = 'desbloqueado';
+    }
+  });
+
+  // Crear elementos y agregar eventos
+  ramos.forEach(ramo => {
     const div = document.createElement('div');
-    div.className = 'ramo' + (estadoRamos[ramo.id] ? '' : ' bloqueado');
+    div.className = 'ramo ' + estadoRamos[ramo.id];
     div.id = ramo.id;
     div.innerText = `${ramo.nombre}\n(${ramo.creditos} créditos)`;
 
     div.addEventListener('click', () => {
-      if (!estadoRamos[ramo.id] || div.classList.contains('aprobado')) return;
-
-      div.classList.add('aprobado');
+      if (estadoRamos[ramo.id] !== 'desbloqueado') return;
 
       // Marcar como aprobado
-      estadoRamos[ramo.id] = true;
+      estadoRamos[ramo.id] = 'aprobado';
+      div.classList.remove('desbloqueado');
+      div.classList.add('aprobado');
 
-      // Intentar desbloquear los que dependen
+      // Calcular créditos aprobados
+      const creditosActuales = Object.entries(estadoRamos)
+        .filter(([_, estado]) => estado === 'aprobado')
+        .map(([id]) => ramos.find(r => r.id === id).creditos)
+        .reduce((a, b) => a + b, 0);
+
+      // Desbloquear ramos que dependen del aprobado
       ramos.forEach(posible => {
         if (posible.requisitos.includes(ramo.id)) {
-          const requisitosCumplidos = posible.requisitos.every(req =>
-            document.getElementById(req)?.classList.contains('aprobado')
-          );
+          const requisitosCumplidos = posible.requisitos.every(req => estadoRamos[req] === 'aprobado');
+          const cumpleCreditos = !posible.creditosNecesarios || creditosActuales >= posible.creditosNecesarios;
 
-          const creditosActuales = Object.entries(estadoRamos)
-            .filter(([_, aprobado]) => aprobado)
-            .map(([id]) => ramos.find(r => r.id === id).creditos)
-            .reduce((a, b) => a + b, 0);
-
-          if (requisitosCumplidos && (!posible.creditosNecesarios || creditosActuales >= posible.creditosNecesarios)) {
+          if (requisitosCumplidos && cumpleCreditos && estadoRamos[posible.id] === 'bloqueado') {
+            estadoRamos[posible.id] = 'desbloqueado';
             const divTarget = document.getElementById(posible.id);
             if (divTarget) {
               divTarget.classList.remove('bloqueado');
-              estadoRamos[posible.id] = true;
+              divTarget.classList.add('desbloqueado');
             }
           }
         }
@@ -132,4 +144,3 @@ function crearMalla() {
 }
 
 window.onload = crearMalla;
-
