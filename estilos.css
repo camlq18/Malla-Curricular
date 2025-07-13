@@ -1,1 +1,42 @@
 # Malla-Curricular
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #6a0f27; /* Burdeo */
+}
+
+#malla {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.ramo {
+  background-color: #fff;
+  border: 2px solid #6a0f27;
+  border-radius: 10px;
+  padding: 10px;
+  width: 200px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s;
+}
+
+.ramo.aprobado {
+  background-color: #d4a5a5;
+  color: white;
+}
+
+.ramo.bloqueado {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
