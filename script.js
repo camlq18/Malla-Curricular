@@ -83,7 +83,8 @@ const ramos = [
   { nombre: 'Memoria de Título', id: 'memoria', creditos: 20, requisitos: [], abre: [], semestre: 11, impar: null },
 ];
 
-const estadoRamos = {};
+// Estado de los ramos
+const estadoRamos = {}; // id => 'bloqueado' | 'desbloqueado' | 'aprobado'
 
 function creditosAprobados() {
   return Object.entries(estadoRamos)
@@ -99,39 +100,50 @@ function crearMalla(semestreActual) {
   const contenedor = document.getElementById('malla');
   contenedor.innerHTML = '';
 
+  // Filtrar ramos que se imparten en semestre actual (impar o par)
   const esImpar = semestreActual % 2 === 1;
 
   const ramosFiltrados = ramos.filter(r => {
+    // Si semestre es 11 (Memoria de título), siempre mostrar
     if (r.semestre === 11) return true;
+
+    // Filtrar según impar o par
     if (r.impar === null || r.impar === undefined) return true;
     return r.impar === esImpar;
   });
 
+  // Agrupar por semestre para mostrar
   const semestresAgrupados = {};
   ramosFiltrados.forEach(r => {
     if (!semestresAgrupados[r.semestre]) semestresAgrupados[r.semestre] = [];
     semestresAgrupados[r.semestre].push(r);
   });
 
+  // Inicializar estados
   ramosFiltrados.forEach(ramo => {
-    if (estadoRamos[ramo.id] === 'aprobado') return;
     const creditos = creditosAprobados();
     const creditosMinimos = ramo.creditosNecesarios || 0;
     const cumpleCreditos = creditos >= creditosMinimos;
+
+    // Si no tiene requisitos y cumple créditos mínimos, desbloquear
     const requisitosCumplidos = ramo.requisitos.length === 0 || ramo.requisitos.every(req => estadoRamos[req] === 'aprobado');
+
+    // Mantener aprobado si ya estaba
+    if (estadoRamos[ramo.id] === 'aprobado') return;
+
     estadoRamos[ramo.id] = (requisitosCumplidos && cumpleCreditos) ? 'desbloqueado' : 'bloqueado';
   });
 
   Object.keys(semestresAgrupados).sort((a,b) => a-b).forEach(semNum => {
-    const divSemestre = document.createElement('div');
-    divSemestre.className = 'semestre';
+    const divSem = document.createElement('div');
+    divSem.className = 'semestre';
 
     const titulo = document.createElement('h2');
     titulo.textContent = `Semestre ${semNum}`;
-    divSemestre.appendChild(titulo);
+    divSem.appendChild(titulo);
 
-    const containerRamos = document.createElement('div');
-    containerRamos.className = 'ramos-container';
+    const ramosContainer = document.createElement('div');
+    ramosContainer.className = 'ramos-container';
 
     semestresAgrupados[semNum].forEach(ramo => {
       const divRamo = document.createElement('div');
@@ -142,11 +154,45 @@ function crearMalla(semestreActual) {
       divRamo.addEventListener('click', () => {
         if (estadoRamos[ramo.id] !== 'desbloqueado') return;
 
+        // Aprobar ramo
         estadoRamos[ramo.id] = 'aprobado';
         divRamo.classList.remove('desbloqueado');
         divRamo.classList.add('aprobado');
 
+        // Actualizar estados para desbloquear nuevos ramos
         actualizarEstados(semestreActual);
       });
 
-      containerRamos
+      ramosContainer.appendChild(divRamo);
+    });
+
+    divSem.appendChild(ramosContainer);
+    contenedor.appendChild(divSem);
+  });
+}
+
+function actualizarEstados(semestreActual) {
+  const creditos = creditosAprobados();
+
+  ramos.forEach(ramo => {
+    const creditosMinimos = ramo.creditosNecesarios || 0;
+    const cumpleCreditos = creditos >= creditosMinimos;
+    const requisitosCumplidos = ramo.requisitos.every(req => estadoRamos[req] === 'aprobado');
+
+    if (estadoRamos[ramo.id] !== 'aprobado' && requisitosCumplidos && cumpleCreditos) {
+      estadoRamos[ramo.id] = 'desbloqueado';
+      const divRamo = document.getElementById(ramo.id);
+      if (divRamo) {
+        divRamo.classList.remove('bloqueado');
+        divRamo.classList.add('desbloqueado');
+      }
+    }
+  });
+}
+
+// Por defecto mostrar semestre 1
+let semestreActual = 1;
+
+window.onload = () => {
+  crearMalla(semestreActual);
+};
