@@ -1,146 +1,199 @@
 const ramos = [
-  // Primer Semestre
-  { nombre: 'Física I', id: 'fisica1', creditos: 4, requisitos: [], abre: ['fisica2'] },
-  { nombre: 'Álgebra I', id: 'algebra1', creditos: 5, requisitos: [], abre: ['algebra2', 'programacion', 'estadistica'] },
-  { nombre: 'Cálculo I', id: 'calculo1', creditos: 5, requisitos: [], abre: ['calculo2'] },
-  { nombre: 'Química I', id: 'quimica1', creditos: 5, requisitos: [], abre: ['quimica2'] },
-  { nombre: 'Desarrollo de Habilidades de Gestión', id: 'gestion1', creditos: 3, requisitos: [], abre: ['liderazgo'] },
+  // Primer Semestre (Impar)
+  { nombre: 'Física I', id: 'fisica1', creditos: 4, requisitos: [], abre: ['fisica2'], semestre: 1, impar: true },
+  { nombre: 'Álgebra I', id: 'algebra1', creditos: 5, requisitos: [], abre: ['algebra2', 'programacion', 'estadistica'], semestre: 1, impar: true },
+  { nombre: 'Cálculo I', id: 'calculo1', creditos: 5, requisitos: [], abre: ['calculo2'], semestre: 1, impar: true },
+  { nombre: 'Química I', id: 'quimica1', creditos: 5, requisitos: [], abre: ['quimica2'], semestre: 1, impar: true },
+  { nombre: 'Desarrollo de Habilidades de Gestión', id: 'gestion1', creditos: 3, requisitos: [], abre: ['liderazgo'], semestre: 1, impar: true },
 
-  // Segundo Semestre
-  { nombre: 'Física II', id: 'fisica2', creditos: 4, requisitos: ['fisica1'], abre: ['mecanica', 'termodinamica', 'maquinas'] },
-  { nombre: 'Álgebra II', id: 'algebra2', creditos: 5, requisitos: ['algebra1'], abre: ['calculo3', 'ecuaciones'] },
-  { nombre: 'Cálculo II', id: 'calculo2', creditos: 5, requisitos: ['calculo1'], abre: ['calculo3', 'ecuaciones', 'estadistica'] },
-  { nombre: 'Química II', id: 'quimica2', creditos: 5, requisitos: ['quimica1'], abre: [] },
-  { nombre: 'Intro a la Innovación', id: 'innovacion1', creditos: 2, requisitos: [], abre: [] },
+  // Segundo Semestre (Par)
+  { nombre: 'Física II', id: 'fisica2', creditos: 4, requisitos: ['fisica1'], abre: ['mecanica', 'termodinamica', 'maquinas'], semestre: 2, impar: false },
+  { nombre: 'Álgebra II', id: 'algebra2', creditos: 5, requisitos: ['algebra1'], abre: ['calculo3', 'ecuaciones'], semestre: 2, impar: false },
+  { nombre: 'Cálculo II', id: 'calculo2', creditos: 5, requisitos: ['calculo1'], abre: ['calculo3', 'ecuaciones', 'estadistica'], semestre: 2, impar: false },
+  { nombre: 'Química II', id: 'quimica2', creditos: 5, requisitos: ['quimica1'], abre: [], semestre: 2, impar: false },
+  { nombre: 'Introducción a la Innovación en Ingeniería', id: 'innovacion1', creditos: 2, requisitos: [], abre: [], semestre: 2, impar: false },
 
-  // Tercer Semestre
-  { nombre: 'Cálculo III', id: 'calculo3', creditos: 5, requisitos: ['calculo2', 'algebra2'], abre: ['calculo_numerico', 'mecanica', 'optimizacion1'] },
-  { nombre: 'Ecuaciones Diferenciales', id: 'ecuaciones', creditos: 4, requisitos: ['calculo2', 'algebra2'], abre: ['maquinas'] },
-  { nombre: 'Programación', id: 'programacion', creditos: 3, requisitos: ['algebra1'], abre: ['calculo_numerico', 'optimizacion1'] },
-  { nombre: 'Estadística', id: 'estadistica', creditos: 4, requisitos: ['calculo2', 'algebra1'], abre: ['inferencia', 'micro'] },
-  { nombre: 'Inglés I', id: 'ingles1', creditos: 5, requisitos: [], abre: ['ingles2'] },
-  { nombre: 'Liderazgo y Trabajo en Equipo', id: 'liderazgo', creditos: 2, requisitos: ['gestion1'], abre: [] },
+  // Tercer Semestre (Impar)
+  { nombre: 'Cálculo III', id: 'calculo3', creditos: 5, requisitos: ['calculo2', 'algebra2'], abre: ['calculo_numerico', 'mecanica', 'optimizacion1'], semestre: 3, impar: true },
+  { nombre: 'Ecuaciones Diferenciales', id: 'ecuaciones', creditos: 4, requisitos: ['calculo2', 'algebra2'], abre: ['maquinas'], semestre: 3, impar: true },
+  { nombre: 'Programación', id: 'programacion', creditos: 3, requisitos: ['algebra1'], abre: ['calculo_numerico', 'optimizacion1'], semestre: 3, impar: true },
+  { nombre: 'Estadística', id: 'estadistica', creditos: 4, requisitos: ['calculo2', 'algebra1'], abre: ['inferencia', 'micro'], semestre: 3, impar: true },
+  { nombre: 'Inglés I', id: 'ingles1', creditos: 5, requisitos: [], abre: ['ingles2'], semestre: 3, impar: true },
+  { nombre: 'Liderazgo y Trabajo en Equipo', id: 'liderazgo', creditos: 2, requisitos: ['gestion1'], abre: [], semestre: 3, impar: true },
 
-  // Cuarto Semestre
-  { nombre: 'Inferencia Estadística y Muestreo', id: 'inferencia', creditos: 4, requisitos: ['estadistica'], abre: ['estadistica_multi'] },
-  { nombre: 'Cálculo Numérico', id: 'calculo_numerico', creditos: 4, requisitos: ['programacion', 'calculo3'], abre: [] },
-  { nombre: 'Mecánica', id: 'mecanica', creditos: 3, requisitos: ['fisica2', 'calculo3'], abre: ['mecanica_flu'] },
-  { nombre: 'Termodinámica', id: 'termodinamica', creditos: 4, requisitos: ['fisica2'], abre: ['mecanica_flu'] },
-  { nombre: 'Modelación de Sistemas', id: 'modelacion', creditos: 2, requisitos: [], abre: ['administracion', 'tecnologia'] },
-  { nombre: 'Inglés II', id: 'ingles2', creditos: 5, requisitos: ['ingles1'], abre: [] },
+  // Cuarto Semestre (Par)
+  { nombre: 'Inferencia Estadística y Muestreo', id: 'inferencia', creditos: 4, requisitos: ['estadistica'], abre: ['estadistica_multi'], semestre: 4, impar: false },
+  { nombre: 'Cálculo Numérico', id: 'calculo_numerico', creditos: 4, requisitos: ['programacion', 'calculo3'], abre: [], semestre: 4, impar: false },
+  { nombre: 'Mecánica', id: 'mecanica', creditos: 3, requisitos: ['fisica2', 'calculo3'], abre: ['mecanica_flu'], semestre: 4, impar: false },
+  { nombre: 'Termodinámica', id: 'termodinamica', creditos: 4, requisitos: ['fisica2'], abre: ['mecanica_flu'], semestre: 4, impar: false },
+  { nombre: 'Modelación de Sistemas', id: 'modelacion', creditos: 2, requisitos: [], abre: ['administracion', 'tecnologia'], semestre: 4, impar: false },
+  { nombre: 'Inglés II', id: 'ingles2', creditos: 5, requisitos: ['ingles1'], abre: [], semestre: 4, impar: false },
 
-  // Quinto Semestre
-  { nombre: 'Mecánica de Fluidos', id: 'mecanica_flu', creditos: 4, requisitos: ['mecanica', 'termodinamica'], abre: ['transferencia'] },
-  { nombre: 'Máquinas Eléctricas', id: 'maquinas', creditos: 4, requisitos: ['ecuaciones', 'fisica2'], abre: [] },
-  { nombre: 'Microeconomía', id: 'micro', creditos: 4, requisitos: ['estadistica'], abre: ['macro'] },
-  { nombre: 'Análisis Estadístico Multivariado', id: 'estadistica_multi', creditos: 3, requisitos: ['inferencia'], abre: ['simulacion', 'gestion_calidad'] },
-  { nombre: 'Optimización I', id: 'optimizacion1', creditos: 3, requisitos: ['programacion', 'calculo3'], abre: ['simulacion', 'optimizacion2', 'diseno_prod'] },
-  { nombre: 'Práctica Laboral', id: 'practica1', creditos: 2, requisitos: [], abre: [] },
+  // Quinto Semestre (Impar)
+  { nombre: 'Mecánica de Fluidos', id: 'mecanica_flu', creditos: 4, requisitos: ['mecanica', 'termodinamica'], abre: ['transferencia'], semestre: 5, impar: true },
+  { nombre: 'Máquinas Eléctricas', id: 'maquinas', creditos: 4, requisitos: ['ecuaciones', 'fisica2'], abre: [], semestre: 5, impar: true },
+  { nombre: 'Microeconomía', id: 'micro', creditos: 4, requisitos: ['estadistica'], abre: ['macro'], semestre: 5, impar: true },
+  { nombre: 'Análisis Estadístico Multivariado', id: 'estadistica_multi', creditos: 3, requisitos: ['inferencia'], abre: ['simulacion', 'gestion_calidad'], semestre: 5, impar: true },
+  { nombre: 'Optimización I', id: 'optimizacion1', creditos: 3, requisitos: ['programacion', 'calculo3'], abre: ['simulacion', 'optimizacion2', 'diseno_prod'], semestre: 5, impar: true },
+  { nombre: 'Práctica Laboral', id: 'practica1', creditos: 2, requisitos: [], abre: [], semestre: 5, impar: true },
 
-  // Sexto Semestre
-  { nombre: 'Transferencia de Calor', id: 'transferencia', creditos: 4, requisitos: ['mecanica_flu'], abre: ['procesos'] },
-  { nombre: 'Administración', id: 'administracion', creditos: 3, requisitos: ['modelacion'], abre: ['marketing', 'contabilidad', 'estrategia', 'gestion_personas'] },
-  { nombre: 'Macroeconomía', id: 'macro', creditos: 3, requisitos: ['micro'], abre: [] },
-  { nombre: 'Simulación', id: 'simulacion', creditos: 3, requisitos: ['estadistica_multi', 'optimizacion1'], abre: ['planificacion'] },
-  { nombre: 'Optimización II', id: 'optimizacion2', creditos: 3, requisitos: ['optimizacion1'], abre: [] },
-  { nombre: 'Dibujo Industrial', id: 'dibujo', creditos: 3, requisitos: [], abre: [] },
+  // Sexto Semestre (Par)
+  { nombre: 'Transferencia de Calor', id: 'transferencia', creditos: 4, requisitos: ['mecanica_flu'], abre: ['procesos'], semestre: 6, impar: false },
+  { nombre: 'Administración', id: 'administracion', creditos: 3, requisitos: ['modelacion'], abre: ['marketing', 'contabilidad', 'estrategia', 'gestion_personas'], semestre: 6, impar: false },
+  { nombre: 'Macroeconomía', id: 'macro', creditos: 3, requisitos: ['micro'], abre: [], semestre: 6, impar: false },
+  { nombre: 'Simulación', id: 'simulacion', creditos: 3, requisitos: ['estadistica_multi', 'optimizacion1'], abre: ['planificacion'], semestre: 6, impar: false },
+  { nombre: 'Optimización II', id: 'optimizacion2', creditos: 3, requisitos: ['optimizacion1'], abre: [], semestre: 6, impar: false },
+  { nombre: 'Dibujo Industrial', id: 'dibujo', creditos: 3, requisitos: [], abre: [], semestre: 6, impar: false },
 
-  // Séptimo Semestre
-  { nombre: 'Procesos Industriales', id: 'procesos', creditos: 3, requisitos: ['transferencia'], abre: [] },
-  { nombre: 'Innovación', id: 'innovacion2', creditos: 3, requisitos: [], abre: [], creditosNecesarios: 100 },
-  { nombre: 'Marketing', id: 'marketing', creditos: 3, requisitos: ['administracion'], abre: [] },
-  { nombre: 'Contabilidad General y de Costos', id: 'contabilidad', creditos: 3, requisitos: ['administracion'], abre: ['ingenieria_eco', 'finanzas'] },
-  { nombre: 'Gestión Estratégica y Control de Gestión', id: 'estrategia', creditos: 4, requisitos: ['administracion'], abre: [] },
-  { nombre: 'Sustentabilidad en Ingeniería', id: 'sustentabilidad', creditos: 3, requisitos: [], abre: [], creditosNecesarios: 110 },
-  { nombre: 'Complementario I', id: 'complementario1', creditos: 3, requisitos: [], abre: [] },
+  // Séptimo Semestre (Impar)
+  { nombre: 'Procesos Industriales', id: 'procesos', creditos: 3, requisitos: ['transferencia'], abre: [], semestre: 7, impar: true },
+  { nombre: 'Innovación', id: 'innovacion2', creditos: 3, requisitos: [], abre: [], semestre: 7, impar: true, creditosNecesarios: 100 },
+  { nombre: 'Marketing', id: 'marketing', creditos: 3, requisitos: ['administracion'], abre: [], semestre: 7, impar: true },
+  { nombre: 'Contabilidad General y de Costos', id: 'contabilidad', creditos: 3, requisitos: ['administracion'], abre: ['ingenieria_eco', 'finanzas'], semestre: 7, impar: true },
+  { nombre: 'Gestión Estratégica y Control de Gestión', id: 'estrategia', creditos: 4, requisitos: ['administracion'], abre: [], semestre: 7, impar: true },
+  { nombre: 'Sustentabilidad en Ingeniería', id: 'sustentabilidad', creditos: 3, requisitos: [], abre: [], semestre: 7, impar: true, creditosNecesarios: 110 },
+  { nombre: 'Complementario I', id: 'complementario1', creditos: 3, requisitos: [], abre: [], semestre: 7, impar: true },
 
-  // Octavo Semestre
-  { nombre: 'Planificación y Control de Producción', id: 'planificacion', creditos: 4, requisitos: ['simulacion'], abre: [] },
-  { nombre: 'Ingeniería Económica', id: 'ingenieria_eco', creditos: 3, requisitos: ['contabilidad'], abre: ['evaluacion'] },
-  { nombre: 'Finanzas', id: 'finanzas', creditos: 4, requisitos: ['contabilidad'], abre: [] },
-  { nombre: 'Gestión y Control de la Calidad', id: 'gestion_calidad', creditos: 3, requisitos: ['estadistica_multi'], abre: [] },
-  { nombre: 'Tecnologías de la Información', id: 'tecnologia', creditos: 4, requisitos: ['modelacion'], abre: [] },
-  { nombre: 'Complementario II', id: 'complementario2', creditos: 2, requisitos: [], abre: [] },
+  // Octavo Semestre (Par)
+  { nombre: 'Planificación y Control de Producción', id: 'planificacion', creditos: 4, requisitos: ['simulacion'], abre: [], semestre: 8, impar: false },
+  { nombre: 'Ingeniería Económica', id: 'ingenieria_eco', creditos: 3, requisitos: ['contabilidad'], abre: ['evaluacion'], semestre: 8, impar: false },
+  { nombre: 'Finanzas', id: 'finanzas', creditos: 4, requisitos: ['contabilidad'], abre: [], semestre: 8, impar: false },
+  { nombre: 'Gestión y Control de la Calidad', id: 'gestion_calidad', creditos: 3, requisitos: ['estadistica_multi'], abre: [], semestre: 8, impar: false },
+  { nombre: 'Tecnologías de la Información', id: 'tecnologia', creditos: 4, requisitos: ['modelacion'], abre: [], semestre: 8, impar: false },
+  { nombre: 'Complementario II', id: 'complementario2', creditos: 2, requisitos: [], abre: [], semestre: 8, impar: false },
 
-  // Noveno Semestre
-  { nombre: 'Diseño de Sistemas de Producción', id: 'diseno_prod', creditos: 3, requisitos: ['optimizacion1'], abre: [], creditosNecesarios: 150 },
-  { nombre: 'Evaluación de Proyectos', id: 'evaluacion', creditos: 3, requisitos: ['ingenieria_eco'], abre: ['direccion', 'emprendimiento'] },
-  { nombre: 'Gestión Personas y Comportamiento Organizacional', id: 'gestion_personas', creditos: 3, requisitos: ['administracion'], abre: [] },
-  { nombre: 'Práctica Profesional', id: 'practica2', creditos: 4, requisitos: [], abre: [] },
-  { nombre: 'Electiva I', id: 'electiva1', creditos: 3, requisitos: [], abre: [] },
-  { nombre: 'Electiva II', id: 'electiva2', creditos: 3, requisitos: [], abre: [] },
-  { nombre: 'Electiva III', id: 'electiva3', creditos: 3, requisitos: [], abre: [] },
+  // Noveno Semestre (Impar)
+  { nombre: 'Diseño de Sistemas de Producción', id: 'diseno_prod', creditos: 3, requisitos: ['optimizacion1'], abre: [], semestre: 9, impar: true, creditosNecesarios: 150 },
+  { nombre: 'Evaluación de Proyectos', id: 'evaluacion', creditos: 3, requisitos: ['ingenieria_eco'], abre: ['direccion', 'emprendimiento'], semestre: 9, impar: true },
+  { nombre: 'Gestión Personas y Comportamiento Organizacional', id: 'gestion_personas', creditos: 3, requisitos: ['administracion'], abre: [], semestre: 9, impar: true },
+  { nombre: 'Práctica Profesional', id: 'practica2', creditos: 4, requisitos: [], abre: [], semestre: 9, impar: true },
+  { nombre: 'Electiva I', id: 'electiva1', creditos: 3, requisitos: [], abre: [], semestre: 9, impar: true },
+  { nombre: 'Electiva II', id: 'electiva2', creditos: 3, requisitos: [], abre: [], semestre: 9, impar: true },
+  { nombre: 'Electiva III', id: 'electiva3', creditos: 3, requisitos: [], abre: [], semestre: 9, impar: true },
 
-  // Décimo Semestre
-  { nombre: 'Dirección y Control de Proyectos', id: 'direccion', creditos: 3, requisitos: ['evaluacion'], abre: [] },
-  { nombre: 'Taller de Emprendimiento', id: 'emprendimiento', creditos: 3, requisitos: ['evaluacion'], abre: [] },
-  { nombre: 'Logística', id: 'logistica', creditos: 3, requisitos: [], abre: [], creditosNecesarios: 150 },
-  { nombre: 'Electiva IV', id: 'electiva4', creditos: 3, requisitos: [], abre: [] },
-  { nombre: 'Electiva V', id: 'electiva5', creditos: 3, requisitos: [], abre: [] },
-  { nombre: 'Electiva VI', id: 'electiva6', creditos: 3, requisitos: [], abre: [] },
+  // Décimo Semestre (Par)
+  { nombre: 'Dirección y Control de Proyectos', id: 'direccion', creditos: 3, requisitos: ['evaluacion'], abre: [], semestre: 10, impar: false },
+  { nombre: 'Taller de Emprendimiento', id: 'emprendimiento', creditos: 3, requisitos: ['evaluacion'], abre: [], semestre: 10, impar: false },
+  { nombre: 'Logística', id: 'logistica', creditos: 3, requisitos: [], abre: [], semestre: 10, impar: false, creditosNecesarios: 150 },
+  { nombre: 'Electiva IV', id: 'electiva4', creditos: 3, requisitos: [], abre: [], semestre: 10, impar: false },
+  { nombre: 'Electiva V', id: 'electiva5', creditos: 3, requisitos: [], abre: [], semestre: 10, impar: false },
+  { nombre: 'Electiva VI', id: 'electiva6', creditos: 3, requisitos: [], abre: [], semestre: 10, impar: false },
 
   // Onceavo Semestre
-  { nombre: 'Memoria de Título', id: 'memoria', creditos: 20, requisitos: [], abre: [] },
+  { nombre: 'Memoria de Título', id: 'memoria', creditos: 20, requisitos: [], abre: [], semestre: 11, impar: null },
 ];
 
-// Estado actual de cada ramo: "bloqueado", "desbloqueado", o "aprobado"
-const estadoRamos = {};
+// Estado de los ramos
+const estadoRamos = {}; // id => 'bloqueado' | 'desbloqueado' | 'aprobado'
 
-function crearMalla() {
+function creditosAprobados() {
+  return Object.entries(estadoRamos)
+    .filter(([_, estado]) => estado === 'aprobado')
+    .map(([id]) => {
+      const ramo = ramos.find(r => r.id === id);
+      return ramo ? ramo.creditos : 0;
+    })
+    .reduce((a, b) => a + b, 0);
+}
+
+function crearMalla(semestreActual) {
   const contenedor = document.getElementById('malla');
   contenedor.innerHTML = '';
 
-  // Inicializar estados
-  ramos.forEach(ramo => {
-    const tieneCreditosNecesarios = ramo.creditosNecesarios ? true : false;
-    estadoRamos[ramo.id] = 'bloqueado';
+  // Filtrar ramos que se imparten en semestre actual (impar o par)
+  const esImpar = semestreActual % 2 === 1;
 
-    if (ramo.requisitos.length === 0 && !tieneCreditosNecesarios) {
-      estadoRamos[ramo.id] = 'desbloqueado';
-    }
+  const ramosFiltrados = ramos.filter(r => {
+    // Si semestre es 11 (Memoria de título), siempre mostrar
+    if (r.semestre === 11) return true;
+
+    // Filtrar según impar o par
+    if (r.impar === null || r.impar === undefined) return true;
+    return r.impar === esImpar;
   });
 
-  // Crear elementos y agregar eventos
-  ramos.forEach(ramo => {
-    const div = document.createElement('div');
-    div.className = 'ramo ' + estadoRamos[ramo.id];
-    div.id = ramo.id;
-    div.innerText = `${ramo.nombre}\n(${ramo.creditos} créditos)`;
+  // Agrupar por semestre para mostrar
+  const semestresAgrupados = {};
+  ramosFiltrados.forEach(r => {
+    if (!semestresAgrupados[r.semestre]) semestresAgrupados[r.semestre] = [];
+    semestresAgrupados[r.semestre].push(r);
+  });
 
-    div.addEventListener('click', () => {
-      if (estadoRamos[ramo.id] !== 'desbloqueado') return;
+  // Inicializar estados
+  ramosFiltrados.forEach(ramo => {
+    // Si no tiene requisitos y cumple créditos mínimos, desbloquear, sino bloqueado
+    const creditos = creditosAprobados();
+    const creditosMinimos = ramo.creditosNecesarios || 0;
+    const cumpleCreditos = creditos >= creditosMinimos;
 
-      // Marcar como aprobado
-      estadoRamos[ramo.id] = 'aprobado';
-      div.classList.remove('desbloqueado');
-      div.classList.add('aprobado');
+    const requisitosCumplidos = ramo.requisitos.length === 0 || ramo.requisitos.every(req => estadoRamos[req] === 'aprobado');
 
-      // Calcular créditos aprobados
-      const creditosActuales = Object.entries(estadoRamos)
-        .filter(([_, estado]) => estado === 'aprobado')
-        .map(([id]) => ramos.find(r => r.id === id).creditos)
-        .reduce((a, b) => a + b, 0);
+    estadoRamos[ramo.id] = (requisitosCumplidos && cumpleCreditos) ? 'desbloqueado' : 'bloqueado';
 
-      // Desbloquear ramos que dependen del aprobado
-      ramos.forEach(posible => {
-        if (posible.requisitos.includes(ramo.id)) {
-          const requisitosCumplidos = posible.requisitos.every(req => estadoRamos[req] === 'aprobado');
-          const cumpleCreditos = !posible.creditosNecesarios || creditosActuales >= posible.creditosNecesarios;
+    // Si ya estaba aprobado, mantenerlo
+    if (estadoRamos[ramo.id] === 'aprobado') return;
+  });
 
-          if (requisitosCumplidos && cumpleCreditos && estadoRamos[posible.id] === 'bloqueado') {
-            estadoRamos[posible.id] = 'desbloqueado';
-            const divTarget = document.getElementById(posible.id);
-            if (divTarget) {
-              divTarget.classList.remove('bloqueado');
-              divTarget.classList.add('desbloqueado');
-            }
-          }
-        }
+  Object.keys(semestresAgrupados).sort((a,b) => a-b).forEach(semNum => {
+    const divSem = document.createElement('div');
+    divSem.className = 'semestre';
+
+    const titulo = document.createElement('h2');
+    titulo.textContent = `Semestre ${semNum}`;
+    divSem.appendChild(titulo);
+
+    const ramosContainer = document.createElement('div');
+    ramosContainer.className = 'ramos-container';
+
+    semestresAgrupados[semNum].forEach(ramo => {
+      const divRamo = document.createElement('div');
+      divRamo.className = 'ramo ' + estadoRamos[ramo.id];
+      divRamo.id = ramo.id;
+      divRamo.innerText = `${ramo.nombre}\n(${ramo.creditos} créditos)`;
+
+      divRamo.addEventListener('click', () => {
+        if (estadoRamos[ramo.id] !== 'desbloqueado') return;
+
+        // Aprobar ramo
+        estadoRamos[ramo.id] = 'aprobado';
+        divRamo.classList.remove('desbloqueado');
+        divRamo.classList.add('aprobado');
+
+        // Al aprobar, actualizar estados (puede desbloquear nuevos ramos)
+        actualizarEstados(semestreActual);
       });
+
+      ramosContainer.appendChild(divRamo);
     });
 
-    contenedor.appendChild(div);
+    divSem.appendChild(ramosContainer);
+    contenedor.appendChild(divSem);
   });
 }
 
-window.onload = crearMalla;
+function actualizarEstados(semestreActual) {
+  // Actualiza los estados después de aprobar un ramo
+  const creditos = creditosAprobados();
+
+  ramos.forEach(ramo => {
+    const creditosMinimos = ramo.creditosNecesarios || 0;
+    const cumpleCreditos = creditos >= creditosMinimos;
+    const requisitosCumplidos = ramo.requisitos.every(req => estadoRamos[req] === 'aprobado');
+
+    if (estadoRamos[ramo.id] !== 'aprobado' && requisitosCumplidos && cumpleCreditos) {
+      estadoRamos[ramo.id] = 'desbloqueado';
+      const divRamo = document.getElementById(ramo.id);
+      if (divRamo) {
+        divRamo.classList.remove('bloqueado');
+        divRamo.classList.add('desbloqueado');
+      }
+    }
+  });
+}
+
+// Por defecto asumo semestre 1 para mostrar la malla impar (puedes cambiar esto)
+let semestreActual = 1;
+
+window.onload = () => {
+  crearMalla(semestreActual);
+};
